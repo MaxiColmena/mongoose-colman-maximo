@@ -1,5 +1,5 @@
 import express from "express";
-import { createReview, getAllReviews, getReview, updateReview, deleteReview} from "../controllers/reviewController.js";
+import { createReview, getAllReviews, getReview, updateReview, deleteReview} from "../controllers/review.controllers.js";
 
 const routerReview = express.Router();
 
@@ -9,4 +9,4 @@ routerReview.get("/review/:id", getReview);
 routerReview.put("/review/:id", updateReview);     
 routerReview.delete("/review/:id", deleteReview);  
 
-export default router;
+export default routerReview;

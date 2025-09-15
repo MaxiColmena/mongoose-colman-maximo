@@ -1,4 +1,4 @@
-import Book from "../models/Book.js";
+import Book from "../models/book.model.js";
 
 // Crear libro 
 export const createBook = async (req, res) => {

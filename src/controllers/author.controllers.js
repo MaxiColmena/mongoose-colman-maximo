@@ -1,4 +1,4 @@
-import Author from "../models/Author.js";
+import Author from "../models/author.model.js";
 
 // Crear autor
 export const createAuthor = async (req, res) => {

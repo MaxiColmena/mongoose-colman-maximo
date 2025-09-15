@@ -1,5 +1,5 @@
 import express from "express";
-import { createAuthor, getAllAuthors, getAuthor, updateAuthor, deleteAuthor} from "../controllers/authorController.js";
+import { createAuthor, getAllAuthors, getAuthor, updateAuthor, deleteAuthor} from "../controllers/author.controllers.js";
 
 const routerAuthor = express.Router();
 
@@ -9,4 +9,4 @@ routerAuthor.get("/author/:id", getAuthor);
 routerAuthor.put("/author/:id", updateAuthor);    
 routerAuthor.delete("/author/:id", deleteAuthor); 
 
-export default router;
+export default routerAuthor;
