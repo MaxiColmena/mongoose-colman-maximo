@@ -1,0 +1,29 @@
+{
+  "name": "mongoose-colman-maximo",
+  "version": "1.0.0",
+  "description": "Objetivo:\r Se deberán implementar colecciones con propiedades embebidas y referenciadas. Además, será\r necesario realizar un CRUD completo.\r Base de datos no relacional de MongoDB imprementación de tablas",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxiColmena/mongoose-colman-maximo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxiColmena/mongoose-colman-maximo/issues"
+  },
+  "homepage": "https://github.com/MaxiColmena/mongoose-colman-maximo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.18.1"
+  }
+}
