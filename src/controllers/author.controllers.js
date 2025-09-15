@@ -12,7 +12,7 @@ export const createAuthor = async (req, res) => {
 };
 
 // Obtener todos los autores
-export const getAuthors = async (req, res) => {
+export const getAllAuthors = async (req, res) => {
   try {
     const authors = await Author.find({ isActive: true });
     res.status(200).json(authors);

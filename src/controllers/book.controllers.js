@@ -16,7 +16,7 @@ export const createBook = async (req, res) => {
 };
 
 // Obtener todos los libros
-export const getBooks = async (req, res) => {
+export const getAllBooks = async (req, res) => {
   try {
     const books = await Book.find({ isAvailable: true })
       .populate("author"); // Trae datos del autor

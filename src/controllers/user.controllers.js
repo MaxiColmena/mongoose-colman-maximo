@@ -12,7 +12,7 @@ export const createUser = async (req, res) => {
 };
 
 // Obtener todos los usuarios 
-export const getUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({ isActive: true });
     res.status(200).json(users);

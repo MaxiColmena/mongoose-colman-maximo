@@ -16,7 +16,7 @@ export const createReview = async (req, res) => {
 };
 
 // Obtener todas las reseñas
-export const getReviews = async (req, res) => {
+export const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ isActive: true })
       .populate("user")   // Trae datos del usuario
