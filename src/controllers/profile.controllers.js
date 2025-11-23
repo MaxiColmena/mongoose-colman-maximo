@@ -1,12 +1,6 @@
 import { ProfileModel } from "../models/profile.model.js";
 import { UserModel } from "../models/user.model.js";
 
-/**
- * Controlador para crear un nuevo perfil
- * @param {Object} req - Request object con los datos del perfil
- * @param {Object} res - Response object
- * @returns {Object} Perfil creado con código 201
- */
 export const createProfile = async (req, res) => {
   try {
     // Verificar que el usuario existe y está activo
@@ -56,12 +50,6 @@ export const createProfile = async (req, res) => {
   }
 };
 
-/**
- * Controlador para obtener todos los perfiles activos
- * @param {Object} req - Request object
- * @param {Object} res - Response object
- * @returns {Array} Lista de perfiles con código 200
- */
 export const getAllProfiles = async (req, res) => {
   try {
     // Buscar todos los perfiles activos con populate del usuario
@@ -83,12 +71,6 @@ export const getAllProfiles = async (req, res) => {
   }
 };
 
-/**
- * Controlador para obtener un perfil por ID
- * @param {Object} req - Request object con el ID en params
- * @param {Object} res - Response object
- * @returns {Object} Perfil encontrado con código 200 o error 404
- */
 export const getProfile = async (req, res) => {
   try {
     // Buscar perfil por ID que esté activo
@@ -119,12 +101,6 @@ export const getProfile = async (req, res) => {
   }
 };
 
-/**
- * Controlador para obtener un perfil por ID de usuario (relación 1:1)
- * @param {Object} req - Request object con el userId en params
- * @param {Object} res - Response object
- * @returns {Object} Perfil encontrado con código 200 o error 404
- */
 export const getProfileByUserId = async (req, res) => {
   try {
     // Buscar perfil por ID de usuario que esté activo
@@ -155,12 +131,6 @@ export const getProfileByUserId = async (req, res) => {
   }
 };
 
-/**
- * Controlador para actualizar un perfil
- * @param {Object} req - Request object con el ID en params y datos en body
- * @param {Object} res - Response object
- * @returns {Object} Perfil actualizado con código 200 o error 404
- */
 export const updateProfile = async (req, res) => {
   try {
     // Buscar y actualizar el perfil por ID
@@ -193,12 +163,6 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-/**
- * Controlador para eliminar un perfil (eliminación lógica)
- * @param {Object} req - Request object con el ID en params
- * @param {Object} res - Response object
- * @returns {Object} Mensaje de éxito con código 200 o error 404
- */
 export const deleteProfile = async (req, res) => {
   try {
     // Buscar el perfil por ID
