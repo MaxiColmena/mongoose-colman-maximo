@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { model } from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
   content: String,
@@ -23,4 +24,4 @@ const reviewSchema = new mongoose.Schema({
   timestamps: true
 });
 
-export default mongoose.model("Review", reviewSchema);
+export const ReviewModel = model("Review", reviewSchema);

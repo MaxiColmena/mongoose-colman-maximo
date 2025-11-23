@@ -3,10 +3,10 @@ import { createAuthor, getAllAuthors, getAuthor, updateAuthor, deleteAuthor} fro
 
 const routerAuthor = express.Router();
 
-routerAuthor.post("/author", createAuthor);    
-routerAuthor.get("/author", getAllAuthors);      
-routerAuthor.get("/author/:id", getAuthor);       
-routerAuthor.put("/author/:id", updateAuthor);    
-routerAuthor.delete("/author/:id", deleteAuthor); 
+routerAuthor.post("/authors", createAuthor);    
+routerAuthor.get("/authors", getAllAuthors);      
+routerAuthor.get("/authors/:id", getAuthor);       
+routerAuthor.put("/authors/:id", updateAuthor);    
+routerAuthor.delete("/authors/:id", deleteAuthor); 
 
 export default routerAuthor;

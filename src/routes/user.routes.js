@@ -3,10 +3,10 @@ import { createUser, getAllUsers, getUser, updateUser, deleteUser} from "../cont
 
 const routerUser = express.Router();
 
-routerUser.post("/user", createUser);
-routerUser.get("/user", getAllUsers);  
-routerUser.get("/user/:id", getUser);
-routerUser.put("/user/:id", updateUser);
-routerUser.delete("/user/:id", deleteUser);
+routerUser.post("/users", createUser);
+routerUser.get("/users", getAllUsers);  
+routerUser.get("/users/:id", getUser);
+routerUser.put("/users/:id", updateUser);
+routerUser.delete("/users/:id", deleteUser);
 
 export default routerUser;

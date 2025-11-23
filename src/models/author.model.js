@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { model } from "mongoose";
 
 const authorSchema = new mongoose.Schema({
   name: {
@@ -14,4 +15,4 @@ const authorSchema = new mongoose.Schema({
   timestamps: true // Crea createdAt y updatedAt 
 });
 
-export default mongoose.model("Author", authorSchema);
+export const AuthorModel = model("Author", authorSchema);

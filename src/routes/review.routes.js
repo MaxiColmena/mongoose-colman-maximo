@@ -3,10 +3,10 @@ import { createReview, getAllReviews, getReview, updateReview, deleteReview} fro
 
 const routerReview = express.Router();
 
-routerReview.post("/review", createReview);       
-routerReview.get("/review", getAllReviews);          
-routerReview.get("/review/:id", getReview);        
-routerReview.put("/review/:id", updateReview);     
-routerReview.delete("/review/:id", deleteReview);  
+routerReview.post("/reviews", createReview);       
+routerReview.get("/reviews", getAllReviews);          
+routerReview.get("/reviews/:id", getReview);        
+routerReview.put("/reviews/:id", updateReview);     
+routerReview.delete("/reviews/:id", deleteReview);  
 
 export default routerReview;

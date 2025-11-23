@@ -1,89 +1,160 @@
-import Review from "../models/review.model.js";
+import { ReviewModel } from "../models/review.model.js";
 
-// Crear reseña
 export const createReview = async (req, res) => {
   try {
-    const review = new Review(req.body);
+    // Crear nueva instancia del modelo Review con los datos del body
+    const review = new ReviewModel(req.body);
+    // Guardar la reseña en la base de datos
     await review.save();
     
-    // POPULATE para traer datos relacionados
-    await review.populate("user book");
+    // POPULATE: Traer datos completos de las relaciones
+    // Como Review no tiene referencias directas en otras colecciones,
+    // usamos populate desde Review hacia User y Book
+    await review.populate("user", "name email");  // Trae datos básicos del usuario
+    await review.populate("book", "title isbn");  // Trae datos básicos del libro
     
-    res.status(201).json(review);
+    // Retornar la reseña creada con código 201 (Created)
+    res.status(201).json({
+      message: "Reseña creada exitosamente",
+      review
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Manejo de errores: retornar código 500 (Internal Server Error)
+    res.status(500).json({ 
+      error: "Error al crear reseña",
+      details: error.message 
+    });
   }
 };
 
-// Obtener todas las reseñas
 export const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find({ isActive: true })
-      .populate("user")   // Trae datos del usuario
-      .populate("book");  // Trae datos del libro
+    // Buscar todas las reseñas activas
+    // POPULATE: Trae los datos completos de las relaciones
+    const reviews = await ReviewModel.find({ isActive: true })
+      .populate("user", "name email")   // Trae datos básicos del usuario
+      .populate("book", "title isbn author")  // Trae datos del libro y su autor
+      .populate({
+        path: "book",
+        populate: {
+          path: "author",  // Anidado: trae el autor del libro
+          select: "name nationality"
+        }
+      });
     
-    res.status(200).json(reviews);
+    // Retornar la lista de reseñas con código 200 (OK)
+    res.status(200).json({
+      message: "Reseñas obtenidas exitosamente",
+      count: reviews.length,
+      reviews
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Manejo de errores: retornar código 500 (Internal Server Error)
+    res.status(500).json({ 
+      error: "Error al obtener reseñas",
+      details: error.message 
+    });
   }
 };
 
-// Obtener una reseña por ID
 export const getReview = async (req, res) => {
   try {
-    const review = await Review.findOne({ 
+    // Buscar reseña por ID que esté activa
+    // POPULATE: Trae los datos completos de las relaciones
+    const review = await ReviewModel.findOne({ 
       _id: req.params.id, 
       isActive: true 
     })
-      .populate("user")
-      .populate("book");
+      .populate("user", "name email")   // Trae datos básicos del usuario
+      .populate("book", "title isbn author")  // Trae datos del libro
+      .populate({
+        path: "book",
+        populate: {
+          path: "author",  // Anidado: trae el autor del libro
+          select: "name nationality"
+        }
+      });
     
+    // Si no se encuentra la reseña, retornar 404 (Not Found)
     if (!review) {
-      return res.status(404).json({ error: "Reseña no encontrada" });
+      return res.status(404).json({ 
+        error: "Reseña no encontrada" 
+      });
     }
     
-    res.status(200).json(review);
+    // Retornar la reseña encontrada con código 200 (OK)
+    res.status(200).json({
+      message: "Reseña obtenida exitosamente",
+      review
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Manejo de errores: retornar código 500 (Internal Server Error)
+    res.status(500).json({ 
+      error: "Error al obtener reseña",
+      details: error.message 
+    });
   }
 };
 
-// Actualizar reseña
 export const updateReview = async (req, res) => {
   try {
-    const review = await Review.findByIdAndUpdate(
+    // Buscar y actualizar la reseña por ID
+    // new: true retorna el documento actualizado
+    const review = await ReviewModel.findByIdAndUpdate(
       req.params.id, 
       req.body, 
-      { new: true }
+      { new: true, runValidators: true }  // runValidators ejecuta las validaciones del schema
     )
-      .populate("user")
-      .populate("book");
+      .populate("user", "name email")   // Trae datos básicos del usuario
+      .populate("book", "title isbn");  // Trae datos básicos del libro
     
+    // Si no se encuentra la reseña o no está activa, retornar 404
     if (!review || !review.isActive) {
-      return res.status(404).json({ error: "Reseña no encontrada" });
+      return res.status(404).json({ 
+        error: "Reseña no encontrada" 
+      });
     }
     
-    res.status(200).json(review);
+    // Retornar la reseña actualizada con código 200 (OK)
+    res.status(200).json({
+      message: "Reseña actualizada exitosamente",
+      review
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Manejo de errores: retornar código 500 (Internal Server Error)
+    res.status(500).json({ 
+      error: "Error al actualizar reseña",
+      details: error.message 
+    });
   }
 };
 
-// Eliminación lógica
 export const deleteReview = async (req, res) => {
   try {
-    const review = await Review.findByIdAndUpdate(
-      req.params.id, 
-      { isActive: false }, 
-      { new: true }
-    );
+    // Buscar la reseña por ID
+    const review = await ReviewModel.findById(req.params.id);
     
+    // Si no se encuentra la reseña, retornar 404
     if (!review) {
-      return res.status(404).json({ error: "Reseña no encontrada" });
+      return res.status(404).json({ 
+        error: "Reseña no encontrada" 
+      });
     }
     
-    res.status(200).json({ message: "Reseña eliminada", review });
+    // Eliminar lógicamente la reseña (marcar isActive como false)
+    review.isActive = false;
+    await review.save();
+    
+    // Retornar mensaje de éxito con código 200 (OK)
+    res.status(200).json({ 
+      message: "Reseña eliminada exitosamente",
+      review 
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Manejo de errores: retornar código 500 (Internal Server Error)
+    res.status(500).json({ 
+      error: "Error al eliminar reseña",
+      details: error.message 
+    });
   }
 };
